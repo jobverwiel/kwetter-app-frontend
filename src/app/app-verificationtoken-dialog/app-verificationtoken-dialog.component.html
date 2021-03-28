@@ -1,0 +1,25 @@
+<div>
+    <mat-card style="width: 450px; margin: 0 auto; float: none; margin-bottom: 10px;">
+        <mat-card-header>
+            <div mat-card-avatar class="header-image"></div>
+          </mat-card-header>
+        <mat-card-content>
+            <div>
+                <p>To verify the e-mailaddress given is truely your account, an e-mail has been sent with a verification token. Fill in this token to proceed with logging in.</p>
+            </div>
+            <div>
+                <form [formGroup]="formVerifyVerificationToken">
+                <div>
+                    <mat-form-field appearance="fill" class="login-inputs">
+                        <mat-label>Verification token:</mat-label>
+                        <input [(ngModel)]="VerificationModel.VerificationToken" class="form-control" formControlName="VerifyVerificationtokenToken"  matInput>
+                      </mat-form-field>
+                </div>
+                </form>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button (click)="sendVerificationToken()">Confirm</button>
+        </mat-card-actions>
+      </mat-card>
+</div>

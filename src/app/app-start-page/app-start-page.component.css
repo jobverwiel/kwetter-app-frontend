@@ -1,0 +1,11 @@
+.big-button{
+    height: 45px;
+    width: 375px !important;
+    margin-top: 25px;
+    border-radius: 5px;
+}
+.header-image{
+    border-radius: 0px;
+    background-image: url("/assets/twitterlogo.png");
+    background-size:cover;
+}
