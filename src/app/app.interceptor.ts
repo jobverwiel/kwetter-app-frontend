@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpResponse, HttpErrorResponse, HttpEvent, } from '@angular/common/http';
 import { AuthenticationService } from './authentication.service';
+import { catchError } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AppInterceptor implements HttpInterceptor {
-    constructor(private authService: AuthenticationService) { }
-    intercept(req: HttpRequest<any>, next: HttpHandler) {
+    constructor(
+        private authService: AuthenticationService,
+        private snackbarService: MatSnackBar
+        ) { }
+    intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
         const token = this.authService.getAuthorizationToken();
 
@@ -19,6 +25,18 @@ export class AppInterceptor implements HttpInterceptor {
             });
         }
 
-        return next.handle(req);
+        return next.handle(req).pipe(
+            catchError((error: HttpErrorResponse) => {
+              if (error.status === 401 && error.url?.indexOf('authentication/login') === -1) {
+                this.authService.logout();
+                this.snackbarService.open("Your session has expired!", undefined, {
+                  panelClass: 'error-snack',
+                  duration: 2500
+                });
+              }
+              return throwError(error);
+            })
+          );
+        }
     }
-}
+
