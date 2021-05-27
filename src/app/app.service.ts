@@ -8,7 +8,7 @@ import { IVerificationTokenModel } from 'src/mapping/IVerificationTokenModel';
 
 @Injectable()
 export class AppService {
-    API_GATEWAY = 'http://localhost:81/api/'
+    API_GATEWAY = 'http://localhost:84/api/'
     constructor(
         private http: HttpClient,
     ) { }
