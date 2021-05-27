@@ -16,8 +16,8 @@ jobs:
         node-version: 14.16.*
     - name: Install dependencies
       run: npm install
-    - name: Lint
-      run: npm run lint
+    #- name: Lint
+     # run: npm run lint
     - name: Build
       run: npm run build -- --prod
     
@@ -35,7 +35,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: siebrum/aci-frontend:latest
+        tags: ${{ secrets.DOCKER_USERNAME }}/kwetter-frontend:latest
     
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
